@@ -5,11 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'core/init/navigation/navigation_service.dart';
-import 'features/auth/login/cubit/login_cubit.dart';
-import 'features/auth/register/cubit/register_cubit.dart';
-import 'features/profile/cubit/profile_cubit.dart';
 import 'firebase_options.dart';
 import 'product/blocs/auth/auth_bloc.dart';
+import 'product/cubits/cubits.dart';
 import 'product/repositories/auth_repository.dart';
 import 'product/repositories/profile_repository.dart';
 

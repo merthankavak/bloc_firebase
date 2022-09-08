@@ -17,7 +17,7 @@ class RegisterState extends Equatable {
     return const RegisterState(
       registerStatus: RegisterStatus.initial,
       customErrorModel: CustomErrorModel(),
-      isObscure: false,
+      isObscure: true,
     );
   }
 

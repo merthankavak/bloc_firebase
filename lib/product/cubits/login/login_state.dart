@@ -17,7 +17,7 @@ class LoginState extends Equatable {
     return const LoginState(
       loginStatus: LoginStatus.initial,
       customErrorModel: CustomErrorModel(),
-      isObscure: false,
+      isObscure: true,
     );
   }
 
