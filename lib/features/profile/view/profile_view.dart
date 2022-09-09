@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kartal/kartal.dart';
 
 import '../../../core/base/view/base_view.dart';
-import '../../../core/constants/navigation_enums.dart';
 import '../../../product/cubits/cubits.dart';
 import '../../../product/utility/error_dialog.dart';
 import '../viewmodel/profile_view_model.dart';
@@ -24,11 +23,6 @@ class ProfileView extends StatelessWidget {
         appBar: AppBar(
           centerTitle: true,
           title: const Text('Profile'),
-          leading: IconButton(
-              onPressed: () {
-                viewModel.navigation.router.go(NavigationEnums.homeView.routeName);
-              },
-              icon: const Icon(Icons.arrow_back)),
         ),
         body: BlocConsumer<ProfileCubit, ProfileState>(
           listener: (context, state) {

@@ -16,7 +16,7 @@ class SplashViewModel extends BaseViewModel {
       if (authStatus == AuthStatus.unauthenticated) {
         navigation.router.go(NavigationEnums.loginView.routeName);
       } else if (authStatus == AuthStatus.authenticated) {
-        navigation.router.go(NavigationEnums.homeView.routeName);
+        navigation.router.go(NavigationEnums.tabView.routeName);
       }
     });
   }

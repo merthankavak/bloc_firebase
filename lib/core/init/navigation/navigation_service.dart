@@ -4,7 +4,9 @@ import '../../../features/auth/login/view/login_view.dart';
 import '../../../features/auth/register/view/register_view.dart';
 import '../../../features/auth/splash/view/splash_view.dart';
 import '../../../features/home/view/home_view.dart';
+import '../../../features/maps/view/maps_view.dart';
 import '../../../features/profile/view/profile_view.dart';
+import '../../../features/tab/view/tab_view.dart';
 import '../../constants/navigation_enums.dart';
 
 class NavigationService {
@@ -25,8 +27,11 @@ class NavigationService {
     GoRoute(
         path: NavigationEnums.registerView.routeName,
         builder: (context, state) => const RegisterView()),
+    GoRoute(path: NavigationEnums.tabView.routeName, builder: (context, state) => const TabView()),
     GoRoute(
         path: NavigationEnums.homeView.routeName, builder: (context, state) => const HomeView()),
+    GoRoute(
+        path: NavigationEnums.homeView.routeName, builder: (context, state) => const MapsView()),
     GoRoute(
         path: NavigationEnums.profileView.routeName,
         builder: (context, state) => const ProfileView()),

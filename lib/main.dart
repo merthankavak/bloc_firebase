@@ -8,6 +8,7 @@ import 'core/init/navigation/navigation_service.dart';
 import 'firebase_options.dart';
 import 'product/blocs/auth/auth_bloc.dart';
 import 'product/cubits/cubits.dart';
+import 'product/cubits/tab/tab_cubit.dart';
 import 'product/repositories/auth_repository.dart';
 import 'product/repositories/profile_repository.dart';
 
@@ -59,6 +60,7 @@ class MyApp extends StatelessWidget {
                   ProfileRepository>(), // Profile repositorye context read diyerek erişim verebiliriz.
             ),
           ),
+          BlocProvider<TabCubit>(create: (context) => TabCubit()),
         ],
         child: MaterialApp.router(
           debugShowCheckedModeBanner: false,

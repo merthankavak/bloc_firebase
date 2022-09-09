@@ -20,13 +20,8 @@ class HomeView extends StatelessWidget {
       onPageBuilder: (BuildContext context, HomeViewModel viewModel) => Scaffold(
         appBar: AppBar(
           title: const Text('Home'),
+          centerTitle: true,
           actions: [
-            IconButton(
-              onPressed: () {
-                viewModel.navigation.router.go(NavigationEnums.profileView.routeName);
-              },
-              icon: const Icon(Icons.account_circle),
-            ),
             IconButton(
               onPressed: () {
                 context.read<AuthBloc>().add(SignOutRequestedEvent());

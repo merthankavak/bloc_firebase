@@ -28,7 +28,7 @@ class LoginViewModel extends BaseViewModel {
       ErrorDialog.showMessage(scaffoldKey, customErrorModel);
     }
     if (loginStatus == LoginStatus.success) {
-      navigation.router.go(NavigationEnums.homeView.routeName);
+      navigation.router.go(NavigationEnums.tabView.routeName);
     }
   }
 
