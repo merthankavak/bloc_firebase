@@ -8,8 +8,8 @@ import 'core/init/navigation/navigation_service.dart';
 import 'firebase_options.dart';
 import 'product/blocs/auth/auth_bloc.dart';
 import 'product/cubits/cubits.dart';
-import 'product/cubits/tab/tab_cubit.dart';
 import 'product/repositories/auth_repository.dart';
+import 'product/repositories/geolocation_repository.dart';
 import 'product/repositories/profile_repository.dart';
 
 void main() async {
@@ -32,7 +32,8 @@ class MyApp extends StatelessWidget {
         ),
         RepositoryProvider<ProfileRepository>(
           create: (context) => ProfileRepository(firebaseFirestore: FirebaseFirestore.instance),
-        )
+        ),
+        RepositoryProvider<GeolocationRepository>(create: (context) => GeolocationRepository())
       ],
       child: MultiBlocProvider(
         providers: [
@@ -61,6 +62,9 @@ class MyApp extends StatelessWidget {
             ),
           ),
           BlocProvider<TabCubit>(create: (context) => TabCubit()),
+          BlocProvider<GeolocationCubit>(
+              create: (context) =>
+                  GeolocationCubit(geolocationRepository: context.read<GeolocationRepository>())),
         ],
         child: MaterialApp.router(
           debugShowCheckedModeBanner: false,

@@ -8,6 +8,7 @@ import '../../../../product/blocs/auth/auth_bloc.dart';
 class SplashViewModel extends BaseViewModel {
   @override
   void setContext(BuildContext context) => baseContext = context;
+
   @override
   void init() {}
 
