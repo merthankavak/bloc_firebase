@@ -36,4 +36,33 @@ class ProfileRepository {
       );
     }
   }
+
+  Future<UserModel> updateProfileData({
+    required String uid,
+    required String name,
+  }) async {
+    try {
+      await usersRef.doc(uid).update({
+        'name': name,
+      });
+
+      final DocumentSnapshot userDoc = await usersRef.doc(uid).get();
+
+      final currentUser = UserModel.fromDoc(userDoc);
+
+      return currentUser;
+    } on FirebaseException catch (e) {
+      throw CustomErrorModel(
+        code: e.code,
+        message: e.message!,
+        plugin: e.plugin,
+      );
+    } catch (e) {
+      throw CustomErrorModel(
+        code: 'Exception',
+        message: e.toString(),
+        plugin: 'flutter_error/server_error',
+      );
+    }
+  }
 }
