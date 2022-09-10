@@ -67,6 +67,28 @@ class AuthRepository {
     }
   }
 
+  Future<void> changePassword({
+    required String currentPassword,
+    required String newPassword,
+  }) async {
+    try {
+      final user = fb_auth.FirebaseAuth.instance.currentUser;
+      final cred =
+          fb_auth.EmailAuthProvider.credential(email: user!.email!, password: currentPassword);
+      await user.reauthenticateWithCredential(cred);
+      await user.updatePassword(newPassword);
+    } on fb_auth.FirebaseAuthException catch (e) {
+      throw CustomErrorModel(
+        code: e.code,
+        message: e.message!,
+        plugin: e.plugin,
+      );
+    } catch (e) {
+      throw CustomErrorModel(
+          code: 'Exception', message: e.toString(), plugin: 'flutter_error/server_error');
+    }
+  }
+
   Future<void> signOut() async {
     await firebaseAuth.signOut();
   }

@@ -36,8 +36,6 @@ class ProfileView extends StatelessWidget {
               return const SizedBox.shrink();
             } else if (state.profileStatus == ProfileStatus.loading) {
               return const Center(child: CircularProgressIndicator.adaptive());
-            } else if (state.profileStatus == ProfileStatus.error) {
-              return const Center(child: Text('Something went wrong'));
             }
             return Column(
               children: [
@@ -62,6 +60,27 @@ class ProfileView extends StatelessWidget {
                     },
                   ),
                 ),
+                context.emptySizedHeightBoxLow3x,
+                Card(
+                  child: ListTile(
+                    leading: const Icon(Icons.badge_outlined),
+                    title: const Text('Change Password'),
+                    subtitle: const Text('You can change your password'),
+                    onTap: () {
+                      showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (context) {
+                            return SizedBox(
+                              height: context.mediaQuery.viewInsets.bottom > 0
+                                  ? context.height * 0.9
+                                  : context.height * 0.6,
+                              child: buildChangePasswordForm(viewModel, context),
+                            );
+                          });
+                    },
+                  ),
+                ),
               ],
             );
           },
@@ -70,10 +89,100 @@ class ProfileView extends StatelessWidget {
     );
   }
 
+  Form buildChangePasswordForm(ProfileViewModel viewModel, BuildContext context) {
+    return Form(
+      autovalidateMode: AutovalidateMode.always,
+      key: viewModel.changePasswordFormKey,
+      child: Padding(
+        padding: context.paddingMedium,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text('Change Password', style: Theme.of(context).textTheme.subtitle1!),
+            context.emptySizedHeightBoxNormal,
+            TextFormField(
+              controller: viewModel.currentPasswordTextController,
+              validator: (String? value) {
+                if (value == null || value.trim().isEmpty) {
+                  return 'Password required!';
+                }
+                if (value.length < 8) {
+                  return 'Password must be at least 8 characters long';
+                }
+                return null;
+              },
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                isDense: true,
+                filled: true,
+                labelText: 'Current Password',
+                prefixIcon: Icon(Icons.password),
+              ),
+            ),
+            context.emptySizedHeightBoxLow3x,
+            TextFormField(
+              controller: viewModel.newPasswordTextController,
+              validator: (String? value) {
+                if (value == null || value.trim().isEmpty) {
+                  return 'Password required!';
+                }
+                if (value.length < 8) {
+                  return 'Password must be at least 8 characters long';
+                }
+                if (viewModel.currentPasswordTextController!.text == value) {
+                  return 'Same as your previous password!';
+                }
+                return null;
+              },
+              decoration: const InputDecoration(
+                isDense: true,
+                border: OutlineInputBorder(),
+                filled: true,
+                labelText: 'New Password',
+                prefixIcon: Icon(Icons.password),
+              ),
+            ),
+            context.emptySizedHeightBoxLow3x,
+            TextFormField(
+              controller: viewModel.confirmNewPasswordTextController,
+              validator: (String? value) {
+                if (viewModel.newPasswordTextController!.text != value) {
+                  return 'Password not match!';
+                }
+                return null;
+              },
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                filled: true,
+                isDense: true,
+                labelText: 'Confirm New Password',
+                prefixIcon: Icon(Icons.password),
+              ),
+            ),
+            context.emptySizedHeightBoxLow,
+            TextButton(
+              onPressed: () {
+                context.read<ProfileCubit>().updatePassword(
+                      currentPassword: viewModel.currentPasswordTextController!.text,
+                      newPassword: viewModel.confirmNewPasswordTextController!.text,
+                    );
+                context.pop();
+              },
+              child: const Center(
+                child: Text('Update'),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Form buildChangeFullNameForm(ProfileViewModel viewModel, BuildContext context) {
     return Form(
       autovalidateMode: AutovalidateMode.always,
-      key: viewModel.changeNameCFormKey,
+      key: viewModel.changeNameFormKey,
       child: Padding(
         padding: context.paddingMedium,
         child: Column(
@@ -84,9 +193,23 @@ class ProfileView extends StatelessWidget {
             context.emptySizedHeightBoxNormal,
             TextFormField(
               controller: viewModel.nameTextController,
-              validator: (value) => value!.isNotEmpty ? null : 'Full name does not valid!',
-              decoration: const InputDecoration(labelText: 'Name'),
+              validator: (value) {
+                if (value == null || value.trim().isEmpty) {
+                  return 'Name required!';
+                }
+                if (value.trim().length < 2) {
+                  return 'Enter a valid name!';
+                }
+                return null;
+              },
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                filled: true,
+                labelText: 'Name',
+                prefixIcon: Icon(Icons.account_box),
+              ),
             ),
+            context.emptySizedHeightBoxLow3x,
             TextButton(
               onPressed: () {
                 context.read<ProfileCubit>().updateProfileData(

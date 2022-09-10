@@ -10,13 +10,22 @@ class ProfileViewModel extends BaseViewModel {
   void setContext(BuildContext context) => baseContext = context;
 
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  GlobalKey<FormState> changeNameCFormKey = GlobalKey();
+
+  GlobalKey<FormState> changeNameFormKey = GlobalKey();
+  GlobalKey<FormState> changePasswordFormKey = GlobalKey();
+
   TextEditingController? nameTextController;
+  TextEditingController? currentPasswordTextController;
+  TextEditingController? newPasswordTextController;
+  TextEditingController? confirmNewPasswordTextController;
 
   @override
   void init() {
     final String uid = baseContext.read<AuthBloc>().state.user!.uid;
     baseContext.read<ProfileCubit>().getProfileData(uid: uid);
     nameTextController = TextEditingController();
+    currentPasswordTextController = TextEditingController();
+    newPasswordTextController = TextEditingController();
+    confirmNewPasswordTextController = TextEditingController();
   }
 }

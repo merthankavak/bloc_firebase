@@ -57,8 +57,9 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider<ProfileCubit>(
             create: (context) => ProfileCubit(
-              profileRepository: context.read<
-                  ProfileRepository>(), // Profile repositorye context read diyerek erişim verebiliriz.
+              profileRepository: context.read<ProfileRepository>(),
+              authRepository: context.read<
+                  AuthRepository>(), // Profile repositorye context read diyerek erişim verebiliriz.
             ),
           ),
           BlocProvider<TabCubit>(create: (context) => TabCubit()),
